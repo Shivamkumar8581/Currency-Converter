@@ -1,0 +1,98 @@
+/*
+ * Currency Converter in C
+ * Features:
+ *  - Convert between INR, USD, EUR, GBP, and JPY
+ *  - Menu-driven interface
+ *  - Uses predefined static exchange rates
+ *
+ * Compile: gcc currency_converter.c -o currency_converter
+ * Run: ./currency_converter
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void menu();
+void convert_currency(int choice, double amount);
+
+int main() {
+    int choice;
+    double amount;
+
+    printf("=== Currency Converter ===\n");
+    while (1) {
+        menu();
+        printf("Enter your choice (0 to exit): ");
+        if (scanf("%d", &choice) != 1) {
+            printf("Invalid input. Exiting...\n");
+            break;
+        }
+
+        if (choice == 0) {
+            printf("Thank you for using Currency Converter!\n");
+            break;
+        }
+
+        if (choice < 1 || choice > 5) {
+            printf("Invalid choice. Try again.\n");
+            continue;
+        }
+
+        printf("Enter the amount to convert: ");
+        if (scanf("%lf", &amount) != 1 || amount <= 0) {
+            printf("Invalid amount. Try again.\n");
+            continue;
+        }
+
+        convert_currency(choice, amount);
+    }
+
+    return 0;
+}
+
+void menu() {
+    printf("\n--- Conversion Options ---\n");
+    printf("1. INR to USD\n");
+    printf("2. USD to INR\n");
+    printf("3. INR to EUR\n");
+    printf("4. EUR to INR\n");
+    printf("5. INR to GBP\n");
+    printf("0. Exit\n");
+}
+
+void convert_currency(int choice, double amount) {
+    double result;
+
+    // Predefined exchange rates (example as of 2025)
+    double inr_to_usd = 0.012;  // 1 INR = 0.012 USD
+    double usd_to_inr = 83.0;   // 1 USD = 83 INR
+    double inr_to_eur = 0.011;  // 1 INR = 0.011 EUR
+    double eur_to_inr = 89.0;   // 1 EUR = 89 INR
+    double inr_to_gbp = 0.0095; // 1 INR = 0.0095 GBP
+    double gbp_to_inr = 105.0;  // 1 GBP = 105 INR
+
+    switch (choice) {
+        case 1:
+            result = amount * inr_to_usd;
+            printf("%.2lf INR = %.2lf USD\n", amount, result);
+            break;
+        case 2:
+            result = amount * usd_to_inr;
+            printf("%.2lf USD = %.2lf INR\n", amount, result);
+            break;
+        case 3:
+            result = amount * inr_to_eur;
+            printf("%.2lf INR = %.2lf EUR\n", amount, result);
+            break;
+        case 4:
+            result = amount * eur_to_inr;
+            printf("%.2lf EUR = %.2lf INR\n", amount, result);
+            break;
+        case 5:
+            result = amount * inr_to_gbp;
+            printf("%.2lf INR = %.2lf GBP\n", amount, result);
+            break;
+        default:
+            printf("Conversion not available.\n");
+    }
+}
